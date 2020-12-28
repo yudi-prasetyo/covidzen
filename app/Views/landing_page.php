@@ -28,8 +28,8 @@
                 <a href="index.html">Home</a>
                 <a href="#about">About</a>
                 <a href="#services">Services</a>
-                <a href="#">Login</a>
-                <a href="#">Register</a>
+                <a href="login">Login</a>
+                <a href="register">Register</a>
             </nav>
         </nav>
 

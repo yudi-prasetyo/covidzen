@@ -4,17 +4,35 @@ class Home extends BaseController
 {
 	public function index()
 	{
-		return view('landing_page');
+		if (session()->get('logged_in')) {
+			return view('landing_page');
+		} else {
+			return redirect()->to('login');
+		}
 	}
 
 	public function login()
 	{
-		return view('login');
+		if (!session()->get('logged_in')) {
+			return view('login');
+		} else {
+			return redirect()->to('/');
+		}
 	}
 
 	public function register()
 	{
-		return view('register');
+		if (!session()->get('logged_in')) {
+			return view('register');
+		} else {
+			return redirect()->to('/');
+		}
+	}
+
+	public function logout()
+	{
+		session()->destroy();
+		return redirect()->to('login');
 	}
 
 	//--------------------------------------------------------------------

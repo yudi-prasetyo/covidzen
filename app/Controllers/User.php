@@ -57,19 +57,11 @@ class User extends BaseController {
             $password = $this->request->getVar('password');
             $data = $this->user_model->getUserByName($username);
             if ($data) {
-                // $password = $this->request->getVar('password');
-                // $password2 = $this->request->getVar('password2');
                 if (password_verify($password, $data['password'])) {
-                    // $this->user_model->save([
-                    //     'name' => $this->request->getVar('name'),
-                    //     'username' => $this->request->getVar('username'),
-                    //     'password' => password_hash($password, PASSWORD_DEFAULT),
-                    //     'asal_provinsi' => $this->request->getVar('asal_provinsi'),
-                    //     'jenis_kelamin' => $this->request->getVar('jenis_kelamin')
-                    // ]);
-                    $session = \Config\Services::session();
+                    $session = session();
                     $data_login = [
                         'id' => $data['id'],
+                        'name' => $data['name'],
                         'logged_in' => TRUE
                     ];
 
@@ -77,6 +69,7 @@ class User extends BaseController {
                     
                     // print_r($session->get('id'));
                     return redirect()->to('/');
+                    // return view('session.php');
                 }
             }
         }

@@ -25,11 +25,10 @@
             </nav>
 
             <nav class="navbar-right">
-                <a href="index.html">Home</a>
+                <a href="/">Home</a>
                 <a href="#about">About</a>
                 <a href="#services">Services</a>
-                <a href="login">Login</a>
-                <a href="register">Register</a>
+                <a href="logout">Logout</a>
             </nav>
         </nav>
 
@@ -37,6 +36,7 @@
             <div class="header">
                 <div class="header-text">
                     <h5>SELAMAT DATANG DI COVIDZEN</h5>
+                    <h5><?= strtoupper(session()->get('name')) ?></h5>
                     <h1><strong>Kenali Covid Terhadap Dirimu</strong></h1>
                     <h4>Kenali dampak-dampak COVID-19 terhadap tubuhmu agar kamu lebih
                         tahu dan waspada terhadap virus ini.</h4>

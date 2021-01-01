@@ -28,6 +28,7 @@
                 <a href="/">Home</a>
                 <a href="#about">About</a>
                 <a href="#services">Services</a>
+                <a href="/profile/<?= session()->get('id') ?>">Profile</a>
                 <a href="logout">Logout</a>
             </nav>
         </nav>

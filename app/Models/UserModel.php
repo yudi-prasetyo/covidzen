@@ -10,8 +10,14 @@ class UserModel extends Model {
         return $this->findAll();
     }
     
-    public function getUserById($id) {
-        return $this->where(['id' => $id])->first();
+    public function getUserById($id, $pw = true) {
+        if ($pw) {
+            return $this->where(['id' => $id])->first();
+        } else {
+            return $this->select(['id', 'name', 'username', 'asal_provinsi', 'jenis_kelamin'])
+                        ->where(['id' => $id])
+                        ->first();
+        }
     }
 
     public function getUserByName($username) {

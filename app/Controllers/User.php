@@ -10,14 +10,10 @@ class User extends BaseController {
     }
 
     public function profile($id) {
-        $data['user'] = $this->user_model->getUserById($id);
+        $data['user'] = $this->user_model->getUserById($id, false);
 
         echo view('profile', $data);
     }
-    
-    // public function create() {
-    //     return view('user/create');
-    // }
 
     public function save() {
         if (($this->request->getMethod() === 'post') && ($this->validate([
@@ -67,31 +63,32 @@ class User extends BaseController {
 
                     $session->set($data_login);
                     
-                    // print_r($session->get('id'));
                     return redirect()->to('/');
-                    // return view('session.php');
                 }
             }
         }
-        // return view('register');
+        return redirect()->to('/login');
     }
 
-    public function update($id) {
+    public function update() {
+        $id = session()->get('id');
         if (($this->request->getMethod() === 'post') && ($this->validate([
             'name' => 'required',
             'username' => 'required',
-            'password' => 'required',
             'asal_provinsi' => 'required',
             'jenis_kelamin' => 'required'
         ]))) {
-            $this->user_model->save([
-                'id' => $id,
-                'name' => $this->request->getVar('name'),
-                'username' => $this->request->getVar('username'),
-                'password' => $this->request->getVar('password'),
-                'asal_provinsi' => $this->request->getVar('asal_provinsi'),
-                'jenis_kelamin' => $this->request->getVar('jenis_kelamin')
-            ]);
+            // $this->user_model->save([
+            //     'id' => $id,
+            //     'name' => $this->request->getVar('name'),
+            //     'username' => $this->request->getVar('username'),
+            //     'asal_provinsi' => $this->request->getVar('asal_provinsi'),
+            //     'jenis_kelamin' => $this->request->getVar('jenis_kelamin')
+            // ]);
+
+            if ($file = $this->request->getFile('profile-pic')) {
+                $file->move(ROOTPATH . 'public/profile-pic', "$id.jpg");
+            }
 
             return redirect()->to('/');
         } else {
@@ -99,15 +96,10 @@ class User extends BaseController {
         }
     }
 
-    // public function delete($id) {
-    //     $this->dosen_model->delete($id);
-
-    //     return redirect()->to('/dosen');
-    // }
-
     public function edit($id) {
-        $data['user'] = $this->user_model->getUserById($id);
+        $data['user'] = $this->user_model->getUserById($id, false);
 
+        // print_r($data['user']);
         return view('edit', $data);
     }
 }

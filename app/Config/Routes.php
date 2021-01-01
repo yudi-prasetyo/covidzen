@@ -34,8 +34,9 @@ $routes->get('/', 'Home::index');
 $routes->get('/login', 'Home::login');
 $routes->get('/register', 'Home::register');
 $routes->get('/logout', 'Home::logout');
-$routes->get('/profile', 'User::profile');
-$routes->get('/edit', 'User::edit');
+$routes->get('/profile/(\d+)', 'User::profile/$1');
+$routes->get('/edit/(\d+)', 'User::edit/$1');
+// $routes->get('/update', 'User::update');
 
 /**
  * --------------------------------------------------------------------

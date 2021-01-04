@@ -15,10 +15,163 @@
         <!--<script type="text/javascript" language="javascript" src="login-register.js"></script>-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            var base_url = "<?= base_url() ?>";
+            var trace_data;
+            var test_data;
+
+            $.ajax({
+                url:  base_url + '/trace/showTraceHistory',
+                method: 'get',
+                dataType: 'json',
+                success: function (response) {
+                    trace_data = response;
+                    console.log(JSON.stringify(trace_data));
+                }
+            });
+
+            $.ajax({
+                url:  base_url + '/test/showTestHistory',
+                method: 'get',
+                dataType: 'json',
+                success: function (response) {
+                    test_data = response;
+                    console.log(JSON.stringify(test_data));
+                }
+            });
+
+            $(document).ready(function() { 
+                $('button').click(function() {
+                    getLocation();
+                });
+            });
+        </script>
     </head>
 
     <body>
-        <nav class="navbar">
+        <div class="container">
+            <div class="sidebar">
+                <div class="sidebar-profile">
+                    <img src="img/def.png">
+                    <p><?= session()->get('name') ?></p>
+                </div>
+                <div class="sidebar-menu">
+                    <div class="sidebar-menu-btn">
+                        <img src="img/home.png">
+                        <a href="#">Home</a>
+                    </div>
+                    <div class="sidebar-menu-btn">
+                        <img src="img/location.png">
+                        <a href="/status">Track</a>
+                    </div>
+                    <div class="sidebar-menu-btn">
+                        <img src="img/profile.png">
+                        <a href="/profile/<?= session()->get('id') ?>">Profile</a>
+                    </div>
+                    <div class="sidebar-menu-btn">
+                        <img src="img/logout.png">
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+                <img src="img/Covidzen white 2.png">
+            </div>
+            <div class="home">
+                <img src="img/Covidzen.png" style="margin: auto;"><br/>
+                <br/><h2>Selamat Datang <strong><?= session()->get('name') ?></strong></h2>
+                <div class="covid-case">
+                    <div class="covid-case-box" style="background-color: #D30000;">
+                        <h5>Positif</h5>
+                        <h1><strong>758.000</strong></h1>
+                    </div>
+                    <div class="covid-case-box" style="background-color: #03C03C;">
+                        <h5>Sembuh</h5>
+                        <h1><strong>626.000</strong></h1>
+                    </div>
+                    <div class="covid-case-box" style="background-color: gray;">
+                        <h5>Meninggal</h5>
+                        <h1><strong>22.555</strong></h1></div>
+                    </div>
+                <h3><strong>Peta Penyebaran Covid Provinsi Jawa Barat</strong></h3>
+                <div class="home-article">
+                    <div class="home-article-img">
+                        <img src="img/maps 2.jpeg">
+                    </div>
+                </div>
+                <div class="track-history">
+                    <button class="collapsible"><strong>Track History</strong></button>
+                    <div class="collapse-content">
+                        <div class="track-history-box">
+                            <h3><strong>Aththar Astaghfiranza</strong></h3>
+                            <img src="img/maps.jpg">
+                            <p>1 JANUARI 2021</p>
+                            <p>17.00</p>
+                        </div>
+                        <div class="track-history-box">
+                            <h2><strong>Aththar Astaghfiranza</strong></h2>
+                            <img src="img/maps.jpg">
+                            <p>3 JANUARI 2021</p>
+                            <p>18.32</p>
+                        </div>
+                        <div class="track-history-box">
+                            <h3><strong>Aththar Astaghfiranza</strong></h3>
+                            <img src="img/maps.jpg">
+                            <p>4 JANUARI 2021</p>
+                            <p>07.37</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-history">
+                    <button class="collapsible"><strong>Test History</strong></button>
+                    <div class="collapse-content">
+                        <div class="track-history-box">
+                            <h2><strong>Aththar Astaghfiranza</strong></h2>
+                            <h3>Jenis tes: PCR</h3>
+                            <h3>Status: Negatif</h3>
+                            <p>1 JANUARI 2021</p>
+                            <p>17.00</p>
+                        </div>
+                        <div class="track-history-box">
+                            <h2><strong>Nama Nama</strong></h2>
+                            <h3>Jenis tes: PCR</h3>
+                            <h3>Status: Negatif</h3>
+                            <p>1 JANUARI 2021</p>
+                            <p>17.00</p>
+                        </div>
+                        <div class="track-history-box">
+                            <h2><strong>Nama Nama</strong></h2>
+                            <h3>Jenis tes: PCR</h3>
+                            <h3>Status: Negatif</h3>
+                            <p>1 JANUARI 2021</p>
+                            <p>17.00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <a href="home.html"><img src="img/home.png"></a>
+                <a href="track.html"><img src="img/location.png"></a>
+                <a href="profile.html"><img src="img/profile.png"></a>
+            </footer>
+            <script>
+                var coll = document.getElementsByClassName("collapsible");
+                var i;
+                
+                for (i = 0; i < coll.length; i++) {
+                  coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.maxHeight){
+                      content.style.maxHeight = null;
+                    } else {
+                      content.style.maxHeight = content.scrollHeight + "px";
+                    } 
+                  });
+                }
+            </script>
+        </div>
+
+    
+        <!-- <nav class="navbar">
             <div class="navbar-logo"><a href="#" style="border-bottom: 0px solid black;"><img src="img/covidzen-white-2.png" alt="logo"></a></div>
             <nav class="navbar-left">
                 
@@ -28,6 +181,7 @@
                 <a href="/">Home</a>
                 <a href="#about">About</a>
                 <a href="#services">Services</a>
+                <a href="/status">Status</a>
                 <a href="/profile/<?= session()->get('id') ?>">Profile</a>
                 <a href="logout">Logout</a>
             </nav>
@@ -88,6 +242,6 @@
                 <p>Computer Science Universitas Pendidikan Indonesia</p>
                 <img src="img/covidzen-white-2.png">
             </div>
-        </footer>
+        </footer> -->
     </body>
 </html>

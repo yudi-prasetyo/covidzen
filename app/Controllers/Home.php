@@ -35,6 +35,15 @@ class Home extends BaseController
 		return redirect()->to('login');
 	}
 
+	public function status()
+	{
+		if (session()->get('logged_in')) {
+			return view('status');
+		} else {
+			return redirect()->to('login');
+		}
+	}
+
 	//--------------------------------------------------------------------
 
 }

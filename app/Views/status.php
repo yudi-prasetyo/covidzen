@@ -51,7 +51,7 @@
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-profile">
-                <img src="img/def.png">
+                <img class="img" src="<?= base_url() ?>/profile-pic/<?= session()->get('id') ?>.jpg" onerror="this.src='<?= base_url() ?>/profile-pic/def.png'">
                 <p><?= session()->get('name') ?></p>
             </div>
             <div class="sidebar-menu">

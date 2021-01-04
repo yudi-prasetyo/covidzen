@@ -20,15 +20,16 @@
     <div class="login">
         <img src="img/Covidzen white 2.png">
         <h1><strong>Welcome to Covidzen</strong></h1>
-        <?= \Config\Services::validation()->listErrors(); ?>
+
+        <?= session()->getFlashdata('msg');; ?>
     
         <form action="/user/login_verify" method="POST">
             <?= csrf_field() ?>
 
             <label>Username</label><br/>
-            <input type="text" name="username" placeholder="Username"><br/>
+            <input type="text" name="username" placeholder="Username" required><br/>
             <label>Password</label><br/>
-            <input type="password" name="password" placeholder="Password"><br/>
+            <input type="password" name="password" placeholder="Password" required><br/>
             <input type="submit" value="Login" name="login">
         </form>
         <p>Don't have an account? <a href="/register">Sign Up</a></p>

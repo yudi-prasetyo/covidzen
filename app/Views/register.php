@@ -21,23 +21,21 @@
         <img src="img/Covidzen white 2.png">
         <h1><strong>Sign up to Covidzen</strong></h1>
 
-        <?= \Config\Services::validation()->listErrors(); ?>
+        <?= session()->getFlashdata('msg');; ?>
     
         <form action="/user/save" method="POST">
             <?= csrf_field() ?>
 
             <label>Nama</label><br/>
-            <input type="text" name="name" placeholder="Nama"><br/>
+            <input type="text" name="name" placeholder="Nama" required><br/>
             <label>Username</label><br/>
-            <input type="text" name="username" placeholder="Username"><br/>
+            <input type="text" name="username" placeholder="Username" required><br/>
             <label>Password</label><br/>
-            <input type="password" name="password" placeholder="Password"><br/>
+            <input type="password" name="password" placeholder="Password" required><br/>
             <label>Confirm Password</label><br/>
-            <input type="password" name="password2" placeholder="Password2"><br/>
-            <label>Asal Provinsi</label><br/>
-            <input type="text" name="asal_provinsi" placeholder="Asal Provinsi"><br/>
+            <input type="password" name="password2" placeholder="Password2" required><br/>
             <label>Jenis Kelamin</label><br/>
-            <input type="radio" id="laki-laki" name="jenis_kelamin" value="laki-laki">
+            <input type="radio" id="laki-laki" name="jenis_kelamin" value="laki-laki" required>
             <label for="laki-laki">Laki-laki</label>
             <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan">
             <label for="perempuan">Perempuan</label><br>

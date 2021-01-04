@@ -20,7 +20,7 @@
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-profile">
-                <img src="<?= base_url() ?>/img/def.png">
+                <img class="img" src="<?= base_url() ?>/profile-pic/<?= session()->get('id') ?>.jpg" onerror="this.src='<?= base_url() ?>/profile-pic/def.png'">
                 <p><?= $user['name'] ?></p>
             </div>
             <div class="sidebar-menu">
@@ -46,11 +46,17 @@
         <div class="home">
             <img src="<?= base_url() ?>/img/Covidzen.png" style="margin: auto;"><br/><br/>
             <div class="content">
-                <img class="img" src="<?= base_url() ?>/img/def.png">
+                <img class="img" src="<?= base_url() ?>/profile-pic/<?= session()->get('id') ?>.jpg" onerror="this.src='<?= base_url() ?>/profile-pic/def.png'">
+               
+                <form action="/user/changeProfilePic" method="POST" enctype="multipart/form-data">
+                    <label for="exampleFormControlInput1">Foto Profil</label>
+                    <input type="file" name="profile-pic"/>
+                    <input type="submit" value="Change Profile Picture" name="edit_profil">
+                </form>
+               
                 <h1><strong><?= $user['name'] ?></strong></h1>
-                <h5>Username: <?= $user['username'] ?> - Asal Provinsi: <?= $user['asal_provinsi'] ?> - Jenis Kelamin: <?= $user['jenis_kelamin'] ?></h5>
-                <a href="/edit/<?= $user['id'] ?>" class="btn-pink">Edit Profil</a>
-                
+                <h5>Username: <?= $user['username'] ?> - Jenis Kelamin: <?= $user['jenis_kelamin'] ?></h5>
+                <a href="/edit/<?= $user['id'] ?>" class="btn-pink">Edit Profil</a> 
             </div>
         </div>
         <footer class="footer">

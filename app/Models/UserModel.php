@@ -4,7 +4,7 @@ use CodeIgniter\Model;
 
 class UserModel extends Model {
     protected $table = 'users';
-    protected $allowedFields = ['name', 'username', 'password', 'asal_provinsi', 'jenis_kelamin'];
+    protected $allowedFields = ['name', 'username', 'password', 'jenis_kelamin'];
 
     public function getAllUsers() {
         return $this->findAll();
@@ -14,7 +14,7 @@ class UserModel extends Model {
         if ($pw) {
             return $this->where(['id' => $id])->first();
         } else {
-            return $this->select(['id', 'name', 'username', 'asal_provinsi', 'jenis_kelamin'])
+            return $this->select(['id', 'name', 'username', 'jenis_kelamin'])
                         ->where(['id' => $id])
                         ->first();
         }

@@ -20,7 +20,6 @@ class User extends BaseController {
             'name' => 'required',
             'username' => 'required',
             'password' => 'required',
-            'asal_provinsi' => 'required',
             'jenis_kelamin' => 'required'
         ]))) {
             $username = $this->request->getVar('username');
@@ -33,15 +32,19 @@ class User extends BaseController {
                         'name' => $this->request->getVar('name'),
                         'username' => $this->request->getVar('username'),
                         'password' => password_hash($password, PASSWORD_DEFAULT),
-                        'asal_provinsi' => $this->request->getVar('asal_provinsi'),
                         'jenis_kelamin' => $this->request->getVar('jenis_kelamin')
                     ]);
         
                     return redirect()->to('/login');
+                } else {
+                    session()->setFlashdata('msg', 'Password does not match');
+                    return redirect()->to('/register');
                 }
+            } else {
+                session()->setFlashdata('msg', 'Username already used');
+                return redirect()->to('/register');
             }
         }
-        return view('register');
     }
 
     public function login_verify() {
@@ -64,10 +67,15 @@ class User extends BaseController {
                     $session->set($data_login);
                     
                     return redirect()->to('/');
+                } else {
+                    session()->setFlashdata('msg', 'Wrong password');
+                    return redirect()->to('/login');
                 }
+            } else {
+                session()->setFlashdata('msg', 'Username not found');
+                return redirect()->to('/login');
             }
         }
-        return redirect()->to('/login');
     }
 
     public function update() {
@@ -75,25 +83,37 @@ class User extends BaseController {
         if (($this->request->getMethod() === 'post') && ($this->validate([
             'name' => 'required',
             'username' => 'required',
-            'asal_provinsi' => 'required',
             'jenis_kelamin' => 'required'
         ]))) {
-            // $this->user_model->save([
-            //     'id' => $id,
-            //     'name' => $this->request->getVar('name'),
-            //     'username' => $this->request->getVar('username'),
-            //     'asal_provinsi' => $this->request->getVar('asal_provinsi'),
-            //     'jenis_kelamin' => $this->request->getVar('jenis_kelamin')
-            // ]);
+            $username = $this->request->getVar('username');
+            $temp = $this->user_model->getUserByName($username);
 
-            if ($file = $this->request->getFile('profile-pic')) {
-                $file->move(ROOTPATH . 'public/profile-pic', "$id.jpg");
+            if ((($temp) && ($temp['id'] === $id)) || (!$temp)) {
+                $this->user_model->save([
+                    'id' => $id,
+                    'name' => $this->request->getVar('name'),
+                    'username' => $this->request->getVar('username'),
+                    'jenis_kelamin' => $this->request->getVar('jenis_kelamin')
+                ]);
+                return redirect()->to("/profile/$id");
+            } else {
+                session()->setFlashdata('msg', 'Username already used');
+                return redirect()->to("/edit/$id");
             }
-
-            return redirect()->to('/');
         } else {
             return view('/');
         }
+    }
+
+    public function changeProfilePic()
+    {
+        $id = session()->get('id');
+
+        if ($file = $this->request->getFile('profile-pic')) {
+            $file->move(ROOTPATH . 'public/profile-pic', "$id.jpg");
+        }
+
+        return redirect()->to("/profile/$id");
     }
 
     public function edit($id) {

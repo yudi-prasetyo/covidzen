@@ -20,7 +20,7 @@
     <div class="container">
         <div class="sidebar">
             <div class="sidebar-profile">
-                <img src="<?= base_url() ?>/img/def.png">
+                <img class="img" src="<?= base_url() ?>/profile-pic/<?= session()->get('id') ?>.jpg" onerror="this.src='<?= base_url() ?>/profile-pic/def.png'">
                 <p><?= $user['name'] ?></p>
             </div>
             <div class="sidebar-menu">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="sidebar-menu-btn">
                     <img src="<?= base_url() ?>/img/profile.png">
-                    <a href="/profile<?= $user['id'] ?>">Profile</a>
+                    <a href="/profile/<?= $user['id'] ?>">Profile</a>
                 </div>
                 <div class="sidebar-menu-btn">
                     <img src="<?= base_url() ?>/img/logout.png">
@@ -46,21 +46,19 @@
         <div class="home">
             <img src="<?= base_url() ?>/img/Covidzen.png" style="margin: auto;"><br/><br/>
             <div class="content">
-                <?= \Config\Services::validation()->listErrors(); ?>
+                <?= session()->getFlashdata('msg'); ?>
                 <form action="/user/update" method="POST">
                     <?= csrf_field() ?>
         
                     <label>Nama</label><br/>
-                    <input type="text" name="name" value="<?= $user['name'] ?>"><br/>
+                    <input type="text" name="name" value="<?= $user['name'] ?>" required><br/>
                     <label>Username</label><br/>
-                    <input type="text" name="username" value="<?= $user['username'] ?>"><br/>
-                    <label>Asal Provinsi</label><br/>
-                    <input type="text" name="asal_provinsi" value="<?= $user['asal_provinsi'] ?>"><br/>
+                    <input type="text" name="username" value="<?= $user['username'] ?>" required><br/>
                     <label>Jenis Kelamin</label><br/>
                     <input type="radio" id="laki-laki" name="jenis_kelamin" value="laki-laki"
                     <?php if ($user['jenis_kelamin'] === 'laki-laki'): ?>
                         <?= " checked" ?>
-                    <?php endif; ?>>
+                    <?php endif; ?> required>
                     <label for="laki-laki">Laki-laki</label>
                     <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan"
                     <?php if ($user['jenis_kelamin'] === 'perempuan'): ?>
